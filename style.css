@@ -5,7 +5,6 @@
 .main-container {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  grid-template-rows: 20vh 1fr;
   grid-template-areas:
     "display  result"
     "keys result"
@@ -23,7 +22,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 0 0.5rem 10rem 0.5rem;
 }
-.keys {
+.key {
   font-size: 4rem;
   background-color: transparent;
   border-radius: 0.5rem;
