@@ -36,9 +36,11 @@
 }
 .secent-display {
   font-size: 3rem;
+  justify-self: end;
 }
 .first-display {
   font-size: 5rem;
+  justify-self: end;
 }
 .text-container {
   margin-top: 15vh;
