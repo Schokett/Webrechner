@@ -10,13 +10,22 @@ let secentDisplay = 0;
 let firstDisplay = 0;
 let textContainer = 0;
 
+// Holt sich die Nummern und gibt sie aus
 const allKeys = [...document.querySelectorAll(".key")];
 const onlyNumbersKey = allKeys.filter((key) => !isNaN(key.innerText));
-console.log(allKeys);
 
 let resultDisplay = document.getElementById("first-display");
 onlyNumbersKey.forEach((key) => {
   key.addEventListener("click", () => {
-    resultDisplay.innerText = key.innerText;
+    resultDisplay.innerText += key.innerText;
   });
 });
+
+// funktion zum Löschen des first displays
+function deleteButton() {
+  let resultDisplay = document.getElementById("first-display");
+  resultDisplay.innerText -= resultDisplay.innerText;
+}
+
+// funktion zum addieren
+function additionButton() {}
