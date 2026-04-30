@@ -1,9 +1,11 @@
 let secentDisplay = document.getElementById("secent-display");
 let secentCurrentCalculation = secentDisplay.innerText;
-let textContainer = 0;
+let textContainer = null;
 let resultDisplay = document.getElementById("first-display");
 let isNewEntry = false;
+let calculationChain = "";
 
+const operators = ["+", "-", "*", "/"];
 const allKeys = [...document.querySelectorAll(".key")];
 const onlyNumbersKey = allKeys.filter((key) => !isNaN(key.innerText));
 
@@ -24,11 +26,15 @@ function deleteButton() {
 }
 
 function handleOperator(op) {
-  const operators = ["+", "-", "*", "/"];
   const currentFullNumber = resultDisplay.innerText;
-
   if (resultDisplay.innerText === "" || resultDisplay.innerText === "0") return;
-  if (secentDisplay.innerHTML === "0" || secentDisplay.innerText == "") {
+  const endsWithOperator = operators.some((o) => calculationChain.trim().endsWith(o));
+
+  if (endsWithOperator && op !== "=") {
+    calculationChain = calculationChain.trim().slice(0, -1).trim() + " ";
+  }
+  calculationChain += currentFullNumber + " " + op + " ";
+  if (secentDisplay.innerText === "0" || secentDisplay.innerText == "") {
     secentDisplay.innerText = currentFullNumber + op;
   } else {
     let calculate = secentDisplay.innerText + currentFullNumber;
@@ -39,5 +45,23 @@ function handleOperator(op) {
   isNewEntry = true;
 }
 
+function sideDisplayContainerCalculation() {
+  var Element = document.getElementById("text-container");
+
+  Element.innerText += calculationChain;
+
+  // const endsWithOperator = operators.some((op) => calculationChain.trim().endsWith(op));
+
+  // if (!endsWithOperator) {
+  //   Element.innerText = calculationChain;
+  // } else {
+  //   calculationChain.slice(-1);
+  //   Element.innerText = calculationChain;
+  // }
+
+  console.log(calculationChain);
+}
+
 // *** --------------- AUFGABEN ---------------***
 //gleich danach muss die Rechen aufgabe rechts angeigt werden (egal ob nach einen operator oder einem ist gleich)
+// nach dem eine Zahl und ein OP oben sind schiebt er keine zahl von unten mehr hoch , das muss aber !
