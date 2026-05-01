@@ -30,10 +30,12 @@ function handleOperator(op) {
   if (resultDisplay.innerText === "" || resultDisplay.innerText === "0") return;
   const endsWithOperator = operators.some((o) => calculationChain.trim().endsWith(o));
 
-  if (endsWithOperator && op !== "=") {
-    calculationChain = calculationChain.trim().slice(0, -1).trim() + " ";
+  if (!isNewEntry) {
+    calculationChain += currentFullNumber + " " + op + " ";
+  } else if (endsWithOperator) {
+    calculationChain = calculationChain.trim().slice(0, -1) + " " + op + " ";
   }
-  calculationChain += currentFullNumber + " " + op + " ";
+  console.log("bevor den if statement:" + calculationChain);
   if (secentDisplay.innerText === "0" || secentDisplay.innerText == "") {
     secentDisplay.innerText = currentFullNumber + op;
   } else {
@@ -46,20 +48,10 @@ function handleOperator(op) {
 }
 
 function sideDisplayContainerCalculation() {
-  var Element = document.getElementById("text-container");
-
+  var Element = document.getElementById("chain-container");
+  var Element2 = document.getElementById("result-container");
   Element.innerText += calculationChain;
-
-  // const endsWithOperator = operators.some((op) => calculationChain.trim().endsWith(op));
-
-  // if (!endsWithOperator) {
-  //   Element.innerText = calculationChain;
-  // } else {
-  //   calculationChain.slice(-1);
-  //   Element.innerText = calculationChain;
-  // }
-
-  console.log(calculationChain);
+  Element2.innerText += resultDisplay.innerText;
 }
 
 // *** --------------- AUFGABEN ---------------***

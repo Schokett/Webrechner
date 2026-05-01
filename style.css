@@ -42,7 +42,11 @@
   font-size: 5rem;
   justify-self: end;
 }
-.text-container {
+.result-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: auto;
   margin-top: 15vh;
   font-size: 4rem;
   text-align: center;
