@@ -35,7 +35,6 @@ function handleOperator(op) {
   } else if (endsWithOperator) {
     calculationChain = calculationChain.trim().slice(0, -1) + " " + op + " ";
   }
-  console.log("bevor den if statement:" + calculationChain);
   if (secentDisplay.innerText === "0" || secentDisplay.innerText == "") {
     secentDisplay.innerText = currentFullNumber + op;
   } else {

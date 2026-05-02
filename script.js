@@ -5,17 +5,23 @@ let calculationChain = "";
 let operatorsActive = false;
 let numbersActive = false;
 let currentResult = false;
+let isNewNumber = false;
 let activeOperator = "";
 
 const operators = ["+", "-", "*", "/"];
 
 // Verarbeitet das Tippen der Ziffern 0-9
 function appendNumber(number) {
-  result += number;
+  if (activeOperator === "+") {
+    result += number;
+  } else if (activeOperator === "-") {
+    result -= number;
+  } else if (activeOperator === "*") {
+    result *= number;
+  } else {
+    result /= number;
+  }
   numbersActive = true;
-  console.log(result);
-  console.log(numbersActive);
-
   updateNumbersResultDisplay(number);
 }
 
@@ -23,7 +29,7 @@ function appendNumber(number) {
 function handleOperator(op) {
   operatorsActive = true;
   activeOperator = op;
-  console.log(activeOperator);
+  isNewNumber = true;
   updateOperatorsResultDisplay(op);
   calculateAutomatic();
 }
@@ -54,15 +60,16 @@ function deleteButton() {
 // ANZEIGEN von Nummern
 function updateNumbersResultDisplay(numbers) {
   if (numbersActive) {
-    if (resultDisplay.innerText === "0") {
+    if (isNewNumber || resultDisplay.innerText === "0") {
       resultDisplay.innerText = numbers;
+      isNewNumber = false;
     } else {
       resultDisplay.innerText += numbers;
     }
   }
+  console.log(numbersActive);
 
   if (operators.some((el) => secentDisplay.innerText.includes(el))) {
-    resultDisplay.innerText = numbers;
     currentResult = true;
   }
 }
@@ -70,18 +77,14 @@ function updateNumbersResultDisplay(numbers) {
 function updateOperatorsResultDisplay(op) {
   if (!operators.some((el) => resultDisplay.innerText.endsWith(el))) {
     resultDisplay.innerText += op;
-    console.log("hat ein operator hinzugefügt");
-    //schickt rechnug nach oben
     secentDisplay.innerText = resultDisplay.innerText;
     resultDisplay.innerText = resultDisplay.innerText.slice(0, -1);
   } else {
     resultDisplay.innerText = resultDisplay.innerText.slice(0, -1) + op;
-    console.log("hat ein operator hinzugefügt aber auch den letzten gelöscht");
   }
 
   if (result === 0) {
     resultDisplay.innerText = resultDisplay.innerText.slice(0, -1);
-    console.log("Hat den Operator wieder gelöscht");
     // updateOperatorSecentDisplay(op);
   }
 }
