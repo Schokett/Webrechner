@@ -5,6 +5,10 @@ let calculationChain = "";
 
 const operators = ["+", "-", "*", "/"];
 
+//Löscht alles auf resultDisplay
+function deleteButton() {
+  resultDisplay.innerText = "0";
+}
 // Verarbeitet das Tippen der Ziffern 0-9
 function appendNumber(number) {
   if (resultDisplay.innerText === "0") {
@@ -22,6 +26,7 @@ function handleOperator(op) {
   ) {
     resultDisplay.innerText += op;
   } else {
+    resultDisplay.innerText = resultDisplay.innerText.slice(0, -1) + op;
   }
 }
 
