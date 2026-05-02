@@ -47,17 +47,35 @@ function updateNumbersResultDisplay(numbers) {
       resultDisplay.innerText += numbers;
     }
   }
+
+  if (operators.some((el) => secentDisplay.innerText.includes(el))) {
+    resultDisplay.innerText = numbers;
+  }
 }
 // ANZEIGEN von Operatoren
 function updateOperatorsResultDisplay(op) {
   if (!operators.some((el) => resultDisplay.innerText.endsWith(el))) {
     resultDisplay.innerText += op;
     console.log("hat ein operator hinzugefügt");
+    //schickt rechnug nach oben
+    secentDisplay.innerText = resultDisplay.innerText;
+    resultDisplay.innerText = resultDisplay.innerText.slice(0, -1);
   } else {
     resultDisplay.innerText = resultDisplay.innerText.slice(0, -1) + op;
     console.log("hat ein operator hinzugefügt aber auch den letzten gelöscht");
   }
 
   if (result === 0) {
+    resultDisplay.innerText = resultDisplay.innerText.slice(0, -1);
+    console.log("Hat den Operator wieder gelöscht");
+    // updateOperatorSecentDisplay(op);
   }
 }
+// function updateOperatorSecentDisplay(op) {
+//   console.log(secentDisplay.innerText);
+//   if (secentDisplay.innerText === "0") {
+//     secentDisplay.innerText += op;
+//   } else {
+//     secentDisplay.innerText = secentDisplay.innerText.slice(0, -1) + op;
+//   }
+// }
