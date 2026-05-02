@@ -14,21 +14,21 @@
         <p id="first-display" class="first-display">0</p>
       </div>
       <div id="allKeys" class="keys-container">
-        <button class="key">7</button>
-        <button class="key">8</button>
-        <button class="key">9</button>
+        <button class="key" onclick="appendNumber(7)">7</button>
+        <button class="key" onclick="appendNumber(8)">8</button>
+        <button class="key" onclick="appendNumber(9)">9</button>
         <button class="key" onclick="handleOperator('/')">/</button>
-        <button class="key">4</button>
-        <button class="key">5</button>
-        <button class="key">6</button>
+        <button class="key" onclick="appendNumber(4)">4</button>
+        <button class="key" onclick="appendNumber(5)">5</button>
+        <button class="key" onclick="appendNumber(6)">6</button>
         <button class="key" onclick="handleOperator('*')">*</button>
-        <button class="key">1</button>
-        <button class="key">2</button>
-        <button class="key">3</button>
+        <button class="key" onclick="appendNumber(1)">1</button>
+        <button class="key" onclick="appendNumber(2)">2</button>
+        <button class="key" onclick="appendNumber(3)">3</button>
         <button class="key" onclick="handleOperator('-')">-</button>
         <button class="key" onclick="deleteButton()">CE</button>
-        <button class="key">0</button>
-        <button class="key" onclick="sideDisplayContainerCalculation()">=</button>
+        <button class="key" onclick="appendNumber(0)">0</button>
+        <button class="key" onclick="finalizeResult('=')">=</button>
         <button class="key" onclick="handleOperator('+')">+</button>
       </div>
 
