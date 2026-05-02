@@ -4,6 +4,8 @@ let result = 0;
 let calculationChain = "";
 let operatorsActive = false;
 let numbersActive = false;
+let currentResult = false;
+let activeOperator = "";
 
 const operators = ["+", "-", "*", "/"];
 
@@ -20,15 +22,26 @@ function appendNumber(number) {
 // Verarbeitet +, -, *, /
 function handleOperator(op) {
   operatorsActive = true;
+  activeOperator = op;
+  console.log(activeOperator);
   updateOperatorsResultDisplay(op);
+  calculateAutomatic();
 }
 
 // Die reine Mathe-Logik (Input -> Output)
-function calculate() {}
+function calculateAutomatic() {
+  if (currentResult) {
+    secentDisplay.innerText = result + activeOperator;
+    resultDisplay.innerText = result;
+  }
+}
 
 // Speziell für das Gleichheitszeichen
 function finalizeResult(equal) {
-  // console.log(equal);
+  if (currentResult) {
+    secentDisplay.innerText += resultDisplay.innerText + "=";
+    resultDisplay.innerText = result;
+  }
 }
 
 //Löscht alles auf resultDisplay
@@ -50,6 +63,7 @@ function updateNumbersResultDisplay(numbers) {
 
   if (operators.some((el) => secentDisplay.innerText.includes(el))) {
     resultDisplay.innerText = numbers;
+    currentResult = true;
   }
 }
 // ANZEIGEN von Operatoren
