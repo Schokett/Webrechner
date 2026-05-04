@@ -1,53 +1,98 @@
 let secentDisplay = document.getElementById("secent-display");
 let resultDisplay = document.getElementById("first-display");
+let chainContainer = document.getElementById("chain-container");
+let resultContainer = document.getElementById("result-container");
 let result = 0;
 let calculationChain = "";
-let operatorsActive = false;
 let numbersActive = false;
 let currentResult = false;
 let isNewNumber = false;
 let activeOperator = "";
+let currentNumberString = "";
 
 const operators = ["+", "-", "*", "/"];
 
 // Verarbeitet das Tippen der Ziffern 0-9
 function appendNumber(number) {
-  if (activeOperator === "+") {
-    result += number;
-  } else if (activeOperator === "-") {
-    result -= number;
-  } else if (activeOperator === "*") {
-    result *= number;
-  } else {
-    result /= number;
-  }
+  console.log("numbers: " + number);
+  console.log("result1: " + result);
+  //aktuelle Zahl aufbauen.
+  currentNumberString += number;
+  console.log("eingabe: " + currentNumberString);
+  calculationChain += number;
   numbersActive = true;
   updateNumbersResultDisplay(number);
 }
 
 // Verarbeitet +, -, *, /
 function handleOperator(op) {
-  operatorsActive = true;
+  let input = currentNumberString === "" ? resultDisplay.innerText : currentNumberString;
+  let number = parseFloat(currentNumberString);
+  if (isNaN(number)) number = 0;
+  if (activeOperator === "") {
+    result = number;
+  } else {
+    switch (activeOperator) {
+      case "+":
+        result += number;
+        break;
+      case "-":
+        result -= number;
+        break;
+      case "*":
+        result *= number;
+        break;
+      case "/":
+        result /= number;
+        break;
+      default:
+    }
+    currentResult = true;
+  }
+  currentNumberString = "";
+
+  if (activeOperator !== "") {
+    siteContainerResult();
+  }
   activeOperator = op;
   isNewNumber = true;
+  calculationChain += op;
   updateOperatorsResultDisplay(op);
   calculateAutomatic();
 }
 
-// Die reine Mathe-Logik (Input -> Output)
 function calculateAutomatic() {
   if (currentResult) {
-    secentDisplay.innerText = result + activeOperator;
     resultDisplay.innerText = result;
   }
+  secentDisplay.innerText = result + activeOperator;
 }
 
 // Speziell für das Gleichheitszeichen
 function finalizeResult(equal) {
-  if (currentResult) {
-    secentDisplay.innerText += resultDisplay.innerText + "=";
-    resultDisplay.innerText = result;
+  let number = parseFloat(currentNumberString);
+  if (isNaN(number) || activeOperator === "") return;
+
+  switch (activeOperator) {
+    case "+":
+      result += number;
+      break;
+    case "-":
+      result -= number;
+      break;
+    case "*":
+      result *= number;
+      break;
+    case "/":
+      result /= number;
+      break;
   }
+  console.log("chain " + calculationChain);
+  secentDisplay.innerText += resultDisplay.innerText + "=";
+  resultDisplay.innerText = result;
+  activeOperator = "";
+  currentResult = false;
+  siteContainerResult();
 }
 
 //Löscht alles auf resultDisplay
@@ -67,11 +112,6 @@ function updateNumbersResultDisplay(numbers) {
       resultDisplay.innerText += numbers;
     }
   }
-  console.log(numbersActive);
-
-  if (operators.some((el) => secentDisplay.innerText.includes(el))) {
-    currentResult = true;
-  }
 }
 // ANZEIGEN von Operatoren
 function updateOperatorsResultDisplay(op) {
@@ -82,17 +122,12 @@ function updateOperatorsResultDisplay(op) {
   } else {
     resultDisplay.innerText = resultDisplay.innerText.slice(0, -1) + op;
   }
-
-  if (result === 0) {
-    resultDisplay.innerText = resultDisplay.innerText.slice(0, -1);
-    // updateOperatorSecentDisplay(op);
-  }
 }
-// function updateOperatorSecentDisplay(op) {
-//   console.log(secentDisplay.innerText);
-//   if (secentDisplay.innerText === "0") {
-//     secentDisplay.innerText += op;
-//   } else {
-//     secentDisplay.innerText = secentDisplay.innerText.slice(0, -1) + op;
-//   }
-// }
+
+function siteContainerResult() {
+  let topDisplay = document.getElementById("chain-container");
+  let bottomDisplay = document.getElementById("result-container");
+
+  topDisplay.innerText += calculationChain + "=";
+  bottomDisplay.innerText += result;
+}
