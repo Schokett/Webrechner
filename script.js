@@ -4,18 +4,32 @@ let chainContainer = document.getElementById("chain-container");
 let resultContainer = document.getElementById("result-container");
 let result = 0;
 let calculationChain = "";
+
+//checkt ob eine Nummer eingetippt wurde
 let numbersActive = false;
+// KP
 let currentResult = false;
+// schaut ob eine neue Rechnung anfängt und bereitet vor
+let newCalculationReset = false;
+// guckt ob die eigegebene Zahl nach einem Operator kommt oder noch zur alten kette gehört
 let isNewNumber = false;
 let activeOperator = "";
 let currentNumberString = "";
 
 const operators = ["+", "-", "*", "/"];
 
+function checkNewNumber() {
+  if (newCalculationReset) {
+    secentDisplay.innerText = "";
+    newCalculationReset = false;
+    currentNumberString = "";
+  }
+}
 // Verarbeitet das Tippen der Ziffern 0-9
 function appendNumber(number) {
+  checkNewNumber();
   console.log("numbers: " + number);
-  console.log("result1: " + result);
+  console.log("result: " + result);
   //aktuelle Zahl aufbauen.
   currentNumberString += number;
   console.log("eingabe: " + currentNumberString);
@@ -53,11 +67,14 @@ function handleOperator(op) {
 
   if (activeOperator !== "") {
     siteContainerResult();
+    calculationChain = result;
   }
   activeOperator = op;
   isNewNumber = true;
   calculationChain += op;
-  updateOperatorsResultDisplay(op);
+  //calculationChain = "";
+  newCalculationReset = false;
+
   calculateAutomatic();
 }
 
@@ -88,11 +105,17 @@ function finalizeResult(equal) {
       break;
   }
   console.log("chain " + calculationChain);
-  secentDisplay.innerText += resultDisplay.innerText + "=";
+  secentDisplay.innerText = calculationChain + "=" + result;
   resultDisplay.innerText = result;
+  siteContainerResult();
+
+  calculationChain = result.toString();
+
   activeOperator = "";
   currentResult = false;
-  siteContainerResult();
+  isNewNumber = true;
+  newCalculationReset = true;
+  currentNumberString = result;
 }
 
 //Löscht alles auf resultDisplay
@@ -117,7 +140,7 @@ function updateNumbersResultDisplay(numbers) {
 function updateOperatorsResultDisplay(op) {
   if (!operators.some((el) => resultDisplay.innerText.endsWith(el))) {
     resultDisplay.innerText += op;
-    secentDisplay.innerText = resultDisplay.innerText;
+    // secentDisplay.innerText = resultDisplay.innerText;
     resultDisplay.innerText = resultDisplay.innerText.slice(0, -1);
   } else {
     resultDisplay.innerText = resultDisplay.innerText.slice(0, -1) + op;
@@ -133,4 +156,7 @@ function siteContainerResult() {
     </div>
   `;
   historyList.innerHTML = htmlSnippet + historyList.innerHTML;
+
+  newCalculationReset = true;
+  // calculationChain = "";
 }
