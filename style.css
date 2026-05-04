@@ -42,7 +42,7 @@
   font-size: 5rem;
   justify-self: end;
 }
-.result-container {
+.result-container:first-child {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -50,4 +50,15 @@
   margin-top: 15vh;
   font-size: 4rem;
   text-align: center;
+  text-align: end;
+}
+.result-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: auto;
+  /* margin-top: 15vh; */
+  font-size: 4rem;
+  text-align: center;
+  text-align: end;
 }

@@ -125,9 +125,12 @@ function updateOperatorsResultDisplay(op) {
 }
 
 function siteContainerResult() {
-  let topDisplay = document.getElementById("chain-container");
-  let bottomDisplay = document.getElementById("result-container");
+  let historyList = document.getElementById("history-container");
 
-  topDisplay.innerText += calculationChain + "=";
-  bottomDisplay.innerText += result;
+  let htmlSnippet = `
+    <div class="result-container">
+      <p id="chain-container" class="text-container">${calculationChain} = ${result}</p>
+    </div>
+  `;
+  historyList.innerHTML = htmlSnippet + historyList.innerHTML;
 }
